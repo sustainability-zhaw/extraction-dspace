@@ -1,9 +1,10 @@
 FROM python:3.11.1-slim-bullseye
 
 ENV TARGET_HOST=
+ENV DB_HOST=
 # check every 30 days
 ENV BATCH_INTERVAL=2592000
-ENV LOG_LEVEL=debug
+ENV LOG_LEVEL=
 
 COPY requirements.txt /requirements.txt
 COPY src/ /app/
