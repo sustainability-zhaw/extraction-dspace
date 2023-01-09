@@ -4,7 +4,7 @@ ENV TARGET_HOST=
 ENV DB_HOST=
 # check every 30 days
 ENV BATCH_INTERVAL=2592000
-ENV LOG_LEVEL=
+ENV LOG_LEVEL=DEBUG
 
 COPY requirements.txt /requirements.txt
 COPY src/ /app/
