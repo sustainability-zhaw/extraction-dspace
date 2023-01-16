@@ -373,7 +373,6 @@ def gen_pub_mutation_string_update(title, authors, abstract,link, year, language
     return query_string
 
 
-
 async def add_records_to_graphdb(oaixml, client):
     """
     The add_records_to_graphdb function takes in a chunk of records and adds them to the graphdb database.
@@ -420,7 +419,6 @@ async def add_records_to_graphdb(oaixml, client):
             # print(result)
             inserted_records += 1
     return inserted_records, deleted_records
-
 
 
 async def add_records_to_graphdb_with_updateDate(oaixml, update_datetime, client):
