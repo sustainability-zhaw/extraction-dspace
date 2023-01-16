@@ -4,6 +4,17 @@ import re
 from bs4 import BeautifulSoup
 from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
+from datetime import datetime
+
+
+def get_current_utc_datetime():
+    """
+    The get_current_utc_datetime function is used to get the current UTC datetime.
+    Note that the time must be in the format of "YYYY-MM-DDTHH:MM:SSZ" and must include the "Z" at the end to indicate that it is in UTC time. 
+    This format is required by the dgraph database.
+    :return: A string containing the current UTC datetime
+    """
+    return datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
 def get_single_chunk_oai_records(oai_url, resumption_token=None):
@@ -19,6 +30,36 @@ def get_single_chunk_oai_records(oai_url, resumption_token=None):
     verb = 'ListRecords'
     if resumption_token is None: # no resumtion token, so get first chunk
         params = {'verb': verb, 'metadataPrefix': 'oai_dc'} # The metadataPrefix - a string to specify the metadata format in OAI-PMH requests issued to the repository
+        resp = requests.get(oai_url, params=params)
+        oaixml = BeautifulSoup(resp.content, "lxml-xml")
+    else: # there is a resumption token, so get the next chunk
+        params={'verb': verb, 'resumptionToken': resumption_token}
+        resp = requests.get(oai_url, params=params)
+        oaixml = BeautifulSoup(resp.content, "lxml-xml")
+    return oaixml
+
+
+def get_single_chunk_oai_records_by_date(oai_url, datestamp=None, resumption_token=None):
+    """
+    The get_single_chunk_oai_records_by_date function takes a URL for an OAI-PMH endpoint,
+    a datestamp (in the form YYYY-MM-DD), and optionally a resumption token. 
+    If no resumption token is provided, it will request the first chunk of records from that date. 
+    If a resumption token is provided, it will request the next chunk of records after that date.  
+    The function returns an XML object containing all OAI records returned by the query.
+    
+    :param oai_url: Specify the oai-pmh endpoint of the repository
+    :param datestamp: Specify a date from which to retrieve the records i.e. '2023-01-13'
+    :param resumption_token: Retrieve the next chunk of records
+    :return: A beautifulsoup object
+    :doc-author: Trelent
+    """
+
+    if not datestamp: # set some default datestamp
+        datestamp = '1900-01-01'
+
+    verb = 'ListRecords'
+    if resumption_token is None: # no resumtion token, so get first chunk
+        params = {'verb': verb, 'metadataPrefix': 'oai_dc', 'from': datestamp} # The metadataPrefix - a string to specify the metadata format in OAI-PMH requests issued to the repository
         resp = requests.get(oai_url, params=params)
         oaixml = BeautifulSoup(resp.content, "lxml-xml")
     else: # there is a resumption token, so get the next chunk
@@ -173,7 +214,7 @@ def gen_mutation_string_for_authors(authors):
     authors_string = '[' + ', '.join(['{fullname: "' + clean_string(author['fullname']) + '"}' for author in authors]) + ']'
     return authors_string
 
-# keywords = record_dict['keywords']
+
 def gen_mutation_string_for_keywords(keywords):
     """
     The gen_mutation_string_for_keywords function takes a list of dictionaris of keywords
@@ -265,6 +306,74 @@ def gen_pub_mutation_string(title, authors, abstract,link, year, language, keywo
     return query_string
 
 
+def gen_pub_mutation_string_update(title, authors, abstract,link, year, language, keywords, classes, subtype, update_datetime):
+    """
+    The gen_pub_mutation_string function takes in a dictionary of information about a publication and returns
+    a string that can be used to add the publication to the database. The string is formatted in the following way:
+    mutation {
+        addInfoObject(input: [{
+            title: "Forest bathing and its effects on stress and health: A systematic review",
+            authors: [{fullname: "Cantoni, Marco"}, {fullname: "Holzer, Lorenz"}],
+            link: "https://digitalcollection.zhaw.ch/handle/11475/23944",
+            year: 2022,
+            keywords: [{name: "Forest therapy"}, {name: "Health"}],
+            class: [{id: "615", name: "Pharmakologie und Therapeutik"}],
+            language: "de",
+            category: {name: "publications"},
+            subtype: {name: "Journal Article"}
+        }],
+            upsert: true) {
+                infoObject {
+                    title
+                    link
+                    year
+                }
+            }    
+        }       
+    
+    :param title: Set the title of the publication
+    :param authors: Generate the mutation string for authors
+    :param abstract: Generate the abstract field of the publication
+    :param link: Link the publication to a specific page on the website
+    :param year: Filter the publications
+    :param language: Determine the language of the publication
+    :param keywords: Generate a string that can be used in the mutation query
+    :param classes: Specify the class of the publication
+    :param subtype: Specify the type of publication
+    :param update_datetime: Specify the date and time of the last update
+    :return: The string for the mutation that will add a publication to the database
+    """
+    
+    query_string = """
+        mutation {
+            addInfoObject(input: [{
+        """ + \
+        'title: "' + title + '",\n' + \
+        'authors: ' + gen_mutation_string_for_authors(authors) + ',\n' + \
+        'link: "' + link + '",\n' + \
+        'year: ' + str(year) + ',\n' + \
+        'abstract: "' + abstract + '",\n' + \
+        'language: "' + language + '",\n' + \
+        'keywords: ' + gen_mutation_string_for_keywords(keywords) + ',\n' + \
+        'class: ' + gen_mutation_string_for_classes(classes) + ',\n' + \
+        'category: { name: "publications" },\n' + \
+        'subtype: { name: "' + subtype + '" }' + \
+        'dateUpdate: "' + update_datetime + '"' + \
+        """
+           }],
+            upsert: true) {
+                infoObject {
+                    title
+                    link
+                    year
+                }
+            }    
+        }   
+        """
+    return query_string
+
+
+
 async def add_records_to_graphdb(oaixml, client):
     """
     The add_records_to_graphdb function takes in a chunk of records and adds them to the graphdb database.
@@ -313,6 +422,56 @@ async def add_records_to_graphdb(oaixml, client):
     return inserted_records, deleted_records
 
 
+
+async def add_records_to_graphdb_with_updateDate(oaixml, update_datetime, client):
+    """
+    The add_records_to_graphdb function takes in a chunk of records and adds them to the graphdb database.
+    :param oaixml: A chunk of records
+    :return: (# of inserted records, # of deleted records)
+    """
+    
+    inserted_records = 0
+    deleted_records = 0
+
+    # add chunk of records to the database
+    for record in oaixml.find_all('record'):
+        print(record)
+        
+        # check header if record is deleted ... indicated by tag: status = deleted
+        record_deleted = False
+        if len(record.header.attrs) > 0:
+            if record.header['status'] == 'deleted':
+                print('Record is deleted')
+                record_deleted = True
+                deleted_records += 1
+
+        if not record_deleted:  
+            record_dict = gen_record_dict(record)  # extract information for current record
+
+            my_query = gen_pub_mutation_string_update(
+                title = record_dict['title'].encode('utf-8').decode('utf-8'),
+                authors = record_dict['authors'],
+                abstract = record_dict['abstract'].encode('utf-8').decode('utf-8'),
+                link = record_dict['link'],
+                year = record_dict['year'],
+                language = record_dict['language'],
+                keywords = record_dict['keywords'],
+                classes = record_dict['class'],
+                subtype = record_dict['subtype']['name'],
+                update_datetime = update_datetime  # Note that the time must be in the format of "YYYY-MM-DDTHH:MM:SSZ" and must include the "Z" at the end to indicate that it is in UTC time
+                )
+            
+            # import io
+            # with io.open("my_query.gql",'w', encoding='utf-8') as f:
+                # f.write(my_query)
+        
+            query = gql(my_query)
+            result = await client.execute_async(query)
+            # print(result)
+            inserted_records += 1
+    return inserted_records, deleted_records
+
+
 oai_url = 'https://digitalcollection.zhaw.ch/oai/request/' # url to the oai-pmh api
 graphdb_endpoint = 'http://localhost:8080/graphql' # url to the graphdb endpoint
 transport = AIOHTTPTransport(url=graphdb_endpoint) # Select your transport with a defined url endpoint
@@ -324,25 +483,30 @@ client = Client(transport=transport, fetch_schema_from_transport=True)
 total_inserted_records = 0
 total_deleted_records = 0
 
-
 # get the first chunk of records
-oaixml = get_single_chunk_oai_records(oai_url)
-token = oaixml.resumptionToken
-# add the first chunk of records to the database
-inserted_records, deleted_records = await add_records_to_graphdb(oaixml, client=client)
+dgraph_update_datetime = get_current_utc_datetime()
+publication_datestamp = '2023-01-13' 
 
+oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=publication_datestamp)
+len(oaixml.find_all('record'))
+
+# add the first chunk of records to the database
+inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, update_datetime=dgraph_update_datetime, client=client)
 total_inserted_records += inserted_records
 total_deleted_records += deleted_records
 
 while token is not None:
     # get the next chunk of records
-    oaixml = get_single_chunk_oai_records(oai_url, resumption_token=token)
+    oaixml = get_single_chunk_oai_records_by_date(oai_url, resumption_token=token)
     token = oaixml.resumptionToken
     # add the next chunk of records to the database
-    inserted_records, deleted_records = await add_records_to_graphdb(oaixml, client=client)
+    inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, update_datetime=dgraph_update_datetime, client=client)
     total_inserted_records += inserted_records
     total_deleted_records += deleted_records
-    
+
+print('Total number of inserted records: ', total_inserted_records)
+print('Total number of deleted records: ', total_deleted_records)
+
 # print(oaixml)
 
 # # Create a GraphQL client using the defined transport
@@ -357,6 +521,7 @@ while token is not None:
 #             authors {
 #                 fullname
 #             }
+#             dateUpdate
 #             abstract
 #             link
 #             year
