@@ -4,13 +4,8 @@
 `local_dev/get_data_from_digcol_add_to_graphdb.py` 
 - script to collect all records from the digital collection and write it in a (local) dgraph DB
 
-- `publication_datestamp` is the date of the last modification of the record in the OAI database in the format `YYYY-MM-DD`
-- `dgraph_update_datetime` is the date of the last update of the record in the dgraph database in the format `YYYY-MM-DDTHH:MM:SSZ`
-
-The script collect all records from the digital collection with <datestamp> greater/equal than `publication_datestamp`, in chunks of 100 records. (`get_single_chunk_oai_records_by_date(oai_url, datestamp=publication_datestamp)`)
-The records are then entered into the dgraph database (`add_records_to_graphdb_with_updateDate(oaixml, update_datetime=dgraph_update_datetime, client=client)`).
-
-
+The script collect all records from the digital collection with <datestamp> greater/equal than `last_update_timestamp`, in chunks of 100 records. (`get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp)`)
+The records are then entered into the dgraph database (`add_records_to_graphdb_with_updateDate(oaixml, client=client)`) whereas `updateDate` of the InfoObject is set to <datestamp> of the OAI recored  
 
 
 ## Development
