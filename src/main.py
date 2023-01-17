@@ -1,8 +1,6 @@
 import datetime
 import time
-
 import logging
-
 import settings
 import hookup
 

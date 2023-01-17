@@ -43,28 +43,6 @@ def get_current_utc_datetime():
     return datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
-def get_single_chunk_oai_records(oai_url, resumption_token=None):
-    """
-    The get_single_chunk_oai_records function is used to get a single chunk of OAI records from the OAI-PMH endpoint.
-    The function takes two arguments: oai_url and resumption_token. If there is no resumption token, then the function will return all records in that first chunk.
-    If there is a resumption token, then it will return only those records that are associated with that particular token.
-    
-    :param oai_url: Specify the oai-pmh endpoint of the repository
-    :param resumption_token: Retrieve subsequent chunks of metadata
-    :return: A beautifulsoup object that contains the records of a single chunk
-    """
-    verb = 'ListRecords'
-    if resumption_token is None: # no resumtion token, so get first chunk
-        params = {'verb': verb, 'metadataPrefix': 'oai_dc'} # The metadataPrefix - a string to specify the metadata format in OAI-PMH requests issued to the repository
-        resp = requests.get(oai_url, params=params)
-        oaixml = BeautifulSoup(resp.content, "lxml-xml")
-    else: # there is a resumption token, so get the next chunk
-        params={'verb': verb, 'resumptionToken': resumption_token}
-        resp = requests.get(oai_url, params=params)
-        oaixml = BeautifulSoup(resp.content, "lxml-xml")
-    return oaixml
-
-
 def get_single_chunk_oai_records_by_date(oai_url, datestamp=None, resumption_token=None):
     """
     The get_single_chunk_oai_records_by_date function takes a URL for an OAI-PMH endpoint,
@@ -152,12 +130,13 @@ def clean_string(string):
 
 def gen_record_dict(record):
     """
-    The gen_record_dict function takes a MARC XML record and returns a dictionary with the following keys:
-        title, authors, persons, abstract, year, keywords (a list of dictionaries), class (a list of dictionaries), link to the record in the digital collection.
-        
-    :param record: Get the xml record from the api
-    :return: A dictionary with the following keys:
-        title, authors, persons, abstract, year, keywords (a list of dictionaries), class (a list of dictionaries), link to the record in the digital collection.
+    The gen_record_dict function takes a single XML record from the ZHAW Digital
+    Collection and returns a dictionary with all of its information. The function
+    takes one argument, which is an xml.etree object representing the record in 
+    question.
+    
+    :param record: xml record from the oai-api
+    :return: A dictionary that can be used to create a new publication in the graph database
     """
     
     # get information from the xml record
@@ -222,8 +201,7 @@ def gen_record_dict(record):
         'link': record_url,# "https://digitalcollection.zhaw.ch/handle/11475/23944",
         'language': record_language, #"de",
         'category': {'name': 'publications'},
-        'subtype':  {'name': record_subtype},
-        'departments': []
+        'subtype':  {'name': record_subtype}
     }
     return record_dict
 
@@ -282,6 +260,7 @@ def gen_pub_mutation_string_update(title, authors, abstract,link, year, language
             language: "de",
             category: {name: "publications"},
             subtype: {name: "Journal Article"}
+            dateUpdate: "1900-01-01T00:00:00Z" 
         }],
             upsert: true) {
                 infoObject {
@@ -397,6 +376,7 @@ total_deleted_records = 0
 # get_last_dgraph_update_timestamp
 last_update_timestamp = await get_last_dgraph_update_timestamp(client)
 last_update_timestamp == None
+print('Last update timestamp in graphDB: ' + last_update_timestamp)
 
 oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp)
 token = oaixml.resumptionToken
