@@ -1,4 +1,4 @@
-import datetime
+# import datetime
 import time
 import logging
 import settings
@@ -8,7 +8,13 @@ logging.basicConfig(format="%(levelname)s: %(name)s: %(asctime)s: %(message)s", 
 
 logger = logging.getLogger("extract-dspace-loop")
 
-while True:
+runs = settings.LIMIT_RUN
+
+while runs != 0:
+    # count down if there is a termination flag. 
+    if runs > 0:
+        runs -= 1
+
     logger.info("start iteration")
     hookup.run()
     # implicit timing
