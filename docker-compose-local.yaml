@@ -15,7 +15,7 @@ services:
       - '9080:9080'
 
   db_init:
-    image: ghcr.io/sustainability-zhaw/dgraph-schema:sha-e3c06cf
+    image: ghcr.io/sustainability-zhaw/dgraph-schema:sha-6b0711c
     environment:
       DGRAPH_SERVER: http://dgraph_standalone:8080
       # SAMPLE_DATA: plain_pubs

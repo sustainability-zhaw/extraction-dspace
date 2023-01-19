@@ -354,6 +354,8 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 def run():
     logger.info("run service function")
 
+    limit_batch = settings.LIMIT_BATCH  # -1, no limit ... process all batches
+
     oai_url = settings.TARGET_HOST  #' https://digitalcollection.zhaw.ch/oai/request/' # url to the oai-pmh api
     graphdb_endpoint = settings.DB_HOST  # 'http://localhost:8080/graphql' # url to the graphdb endpoint
     transport = AIOHTTPTransport(url=graphdb_endpoint) # Select your transport with a defined url endpoint
@@ -368,6 +370,10 @@ def run():
     # get_last_dgraph_update_timestamp
     last_update_timestamp = await get_last_dgraph_update_timestamp(client)
     logger.info('Last update timestamp in graphDB: ' + last_update_timestamp)
+    last_update_timestamp= None
+
+    # count number of batches to be processed
+    batch_count = 0
 
     # get first chunk of records that have been updated since the last update
     oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp)
@@ -378,14 +384,20 @@ def run():
     total_inserted_records += inserted_records
     total_deleted_records += deleted_records
 
+    batch_count += 1
     while token is not None:
-        # get the next chunk of records
-        oaixml = get_single_chunk_oai_records_by_date(oai_url, resumption_token=token)
-        token = oaixml.resumptionToken
-        # add the next chunk of records to the database
-        inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
-        total_inserted_records += inserted_records
-        total_deleted_records += deleted_records
+        if limit_batch > 0 and batch_count < limit_batch: # limit number of batches to be processed   
+            # get the next chunk of records
+            oaixml = get_single_chunk_oai_records_by_date(oai_url, resumption_token=token)
+            token = oaixml.resumptionToken
+            # add the next chunk of records to the database
+            inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
+            total_inserted_records += inserted_records
+            total_deleted_records += deleted_records
+            batch_count += 1
+        else:
+            token = None
+            logging.info('Limit of batches reached. Bacth count: ' + str(batch_count) + ' | Limit: ' + str(limit_batch))
 
     logger.info('Total number of inserted records: ', total_inserted_records)
     logger.info('finished service function')
