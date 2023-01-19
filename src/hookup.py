@@ -54,7 +54,7 @@ def get_single_chunk_oai_records_by_date(oai_url, datestamp=None, resumption_tok
     :doc-author: Trelent
     """
 
-    if not datestamp: # set some default datestamp
+    if datestamp is None: # set some default datestamp
         datestamp = '1900-01-01T00:00:00Z'
 
     verb = 'ListRecords'
@@ -314,8 +314,6 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 
     # add chunk of records to the database
     for record in oaixml.find_all('record'):
-        # print(record)
-        
         # check header if record is deleted ... indicated by tag: status = deleted
         record_deleted = False
         if len(record.header.attrs) > 0:
@@ -339,68 +337,37 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
                 subtype = record_dict['subtype']['name'],
                 update_datetime = record_dict['datestamp']  # Note that the time must be in the format of "YYYY-MM-DDTHH:MM:SSZ" and must include the "Z" at the end to indicate that it is in UTC time
                 )
-            
-            # import io
-            # with io.open("my_query.gql",'w', encoding='utf-8') as f:
-                # f.write(my_query)
-        
             query = gql(my_query)
             result = await client.execute_async(query)
-            # print(result)
             inserted_records += 1
     return inserted_records, deleted_records
 
 
-async def run():
+async def run(resumption_token=None):
     logger.info("run service function")
-
-    limit_batch = settings.LIMIT_BATCH  # -1, no limit ... process all batches
-
     oai_url = settings.TARGET_HOST  #' https://digitalcollection.zhaw.ch/oai/request/' # url to the oai-pmh api
     graphdb_endpoint = settings.DB_HOST  # 'http://localhost:8080/graphql' # url to the graphdb endpoint
     transport = AIOHTTPTransport(url=graphdb_endpoint) # Select your transport with a defined url endpoint
-
     # Create a GraphQL client using the defined transport
     client = Client(transport=transport, fetch_schema_from_transport=True)
 
-    # count number of records
-    total_inserted_records = 0
-    total_deleted_records = 0
-
     # get_last_dgraph_update_timestamp
-    last_update_timestamp = await get_last_dgraph_update_timestamp(client)
-    logger.info('Last update timestamp in graphDB: ' + last_update_timestamp)
-    last_update_timestamp == None
-
-    # count number of batches to be processed
-    batch_count = 0
-
-    # get first chunk of records that have been updated since the last update
-    oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp)
-    token = oaixml.resumptionToken
-
-    # add the first chunk of records to the database
-    inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
-    total_inserted_records += inserted_records
-    total_deleted_records += deleted_records
-
-    batch_count += 1
-    while token is not None:
-        if limit_batch > 0 and batch_count < limit_batch: # limit number of batches to be processed   
-            # get the next chunk of records
-            oaixml = get_single_chunk_oai_records_by_date(oai_url, resumption_token=token)
-            token = oaixml.resumptionToken
-            # add the next chunk of records to the database
-            inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
-            total_inserted_records += inserted_records
-            total_deleted_records += deleted_records
-            batch_count += 1
+    if resumption_token is None:
+        last_update_timestamp = await get_last_dgraph_update_timestamp(client)
+        if last_update_timestamp is not None:
+            logger.info('Last update timestamp in graphDB: ' + last_update_timestamp)
         else:
-            token = None
-            logging.info('Limit of batches reached. Bacth count: ' + str(batch_count) + ' | Limit: ' + str(limit_batch))
+            logger.info('No last update timestamp in graphDB ... default set to 1900-01-01T00:00:00Z')
+    else: 
+        last_update_timestamp = None
+    
+    # chunk of records that have been updated since the last update
+    oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp, resumption_token=resumption_token)
+    token = oaixml.resumptionToken
+    # add chunk of records to the database
+    inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
 
-    logger.info('Total number of inserted records: ', total_inserted_records)
+    logger.info('Number of inserted records: ' + str(inserted_records))
+    logger.info('Number of deleted records: ' + str(deleted_records))
     logger.info('finished service function')
-
-# if __name__ == '__main__':
-#     await run()
+    return token

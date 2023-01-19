@@ -1,5 +1,11 @@
 # extraction pipeline for dspace (aka Digital Collection)
 
+## Setting variables `settings.py`
+
+- `PUBDB_UPDATE_INTERVAL` time to wait between checking for new updates of the publication database
+- `OAI_REQUEST_INTERVAL` time to wait between requests to the oai-pmh api if there is more than one batch of results
+- `LIMIT_BATCH` max number of batch to be prcessed (for testing purposes)
+
 ## Workflow of the extraction pipeline
 `local_dev/get_data_from_digcol_add_to_graphdb.py` 
 - script to collect all records from the digital collection and write it in a (local) dgraph DB
