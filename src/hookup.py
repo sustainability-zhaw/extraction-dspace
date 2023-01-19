@@ -314,7 +314,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 
     # add chunk of records to the database
     for record in oaixml.find_all('record'):
-        print(record)
+        # print(record)
         
         # check header if record is deleted ... indicated by tag: status = deleted
         record_deleted = False
@@ -351,7 +351,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
     return inserted_records, deleted_records
 
 
-def run():
+async def run():
     logger.info("run service function")
 
     limit_batch = settings.LIMIT_BATCH  # -1, no limit ... process all batches
@@ -370,7 +370,7 @@ def run():
     # get_last_dgraph_update_timestamp
     last_update_timestamp = await get_last_dgraph_update_timestamp(client)
     logger.info('Last update timestamp in graphDB: ' + last_update_timestamp)
-    last_update_timestamp= None
+    last_update_timestamp == None
 
     # count number of batches to be processed
     batch_count = 0
@@ -401,3 +401,6 @@ def run():
 
     logger.info('Total number of inserted records: ', total_inserted_records)
     logger.info('finished service function')
+
+# if __name__ == '__main__':
+#     await run()
