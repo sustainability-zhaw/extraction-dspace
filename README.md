@@ -30,7 +30,7 @@ A development environment with dgraph, sample data, and dgraph ratel is provided
 To start the environment run the following command: 
 
 ```bash
-docker compose -f docker-compose-local.yaml up --build --force-recreate --remove-orphans
+docker compose -f docker-compose-local.yaml up --build --force-recreate db db_init
 ```
 
-The launch takes approx. 30 seconds. After that period an initialised dgraph database is exposed via `localhost:8080`.
+The launch takes approx. 30 seconds. After that period an initialised dgraph database is exposed via `http://localhost:8080/graphql`.
