@@ -3,26 +3,39 @@ services:
     build:
       context: ./
     restart: 'no'
+    depends_on:
+      db_init:
+        condition: service_completed_successfully 
     environment:
-      DB_HOST: dgraph_standalone:8080
+      DB_HOST: http://db:8080/graphql
+    networks:
+      - dgraphnet
 
   db:
-    hostname: dgraph_standalone # Hardcoded in db_init entrypoint.sh
     image: dgraph/standalone:v22.0.2
     restart: 'no'
+    networks:
+      - dgraphnet
     ports:
       - '8080:8080'
       - '9080:9080'
 
   db_init:
-    image: ghcr.io/sustainability-zhaw/dgraph-schema:sha-11d8559
+    image: ghcr.io/sustainability-zhaw/dgraph-schema:sha-0812f6f
     environment:
-      DGRAPH_SERVER: http://dgraph_standalone:8080
+      DGRAPH_SERVER: http://db:8080
       # SAMPLE_DATA: plain_pubs
+    networks:
+      - dgraphnet
     restart: 'no'
 
-  db_browser:
-    image: dgraph/ratel:v21.12.0
-    restart: 'no'
-    ports:
-      - '8000:8000'
+  # db_browser:
+  #   image: dgraph/ratel:v21.12.0
+  #   restart: 'no'
+  #   networks:
+  #     - dgraphnet
+  #   ports:
+  #     - '8000:8000'
+
+networks:
+  dgraphnet:
