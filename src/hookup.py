@@ -376,3 +376,4 @@ async def run(resumption_token=None):
     logger.info('Number of deleted records: ' + str(deleted_records))
     logger.info('finished service function')
     return token
+    
