@@ -34,4 +34,4 @@ async def mainLoop():
         time.sleep(sleepTimeout) # wait before asking for the next batches
 
 # run the main loop
-asyncio.run(mainLoop)
+asyncio.run(mainLoop())
