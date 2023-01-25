@@ -17,29 +17,29 @@ LIMIT_BATCH = int(os.getenv('LIMIT_BATCH', 2)) # define how many batches to proc
 # helper dictionary to get the departmental affiliation
 
 DepartmentCollections = {
-    "com_11475_1": "L",
-    "com_11475_2": "P",
-    "com_11475_3": "G",
-    "com_11475_4": "N",
-    "com_11475_5": "R",
-    "com_11475_6": "T",
-    "com_11475_7": "W",
-    "com_11475_8": "S",
-    "com_11475_1074": "A",
-    "com_11475_1077": "V"
+    "com_11475_1": "department_L",
+    "com_11475_2": "department_P",
+    "com_11475_3": "department_G",
+    "com_11475_4": "department_N",
+    "com_11475_5": "department_R",
+    "com_11475_6": "department_T",
+    "com_11475_7": "department_W",
+    "com_11475_8": "department_S",
+    "com_11475_1074": "department_A",
+    "com_11475_1077": "department_V"
 }
 
 # this mapping should come from a config file and the cross matched with dspace collections
 
 DepartmentNames = {
-    "Angewandte Linguistik": "L",
-    "Angewandte Psychologie": "P",
-    "Gesundheit": "G",
-    "Life Sciences und Facility Management": "N",
-    "Rektorat und Ressorts": "R",
-    "School of Engineering": "T",
-    "School of Management and Law": "W",
-    "Soziale Arbeit": "S",
-    "Architektur, Gestaltung und Bauingenieurwesen": "A",
-    "Finanzen & Services": "V"
+    "Angewandte Linguistik": "department_L",
+    "Angewandte Psychologie": "department_P",
+    "Gesundheit": "department_G",
+    "Life Sciences und Facility Management": "department_N",
+    "Rektorat und Ressorts": "department_R",
+    "School of Engineering": "department_T",
+    "School of Management and Law": "department_W",
+    "Soziale Arbeit": "department_S",
+    "Architektur, Gestaltung und Bauingenieurwesen": "department_A",
+    "Finanzen & Services": "department_V"
 } 
