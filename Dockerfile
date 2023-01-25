@@ -1,10 +1,15 @@
 FROM python:3.11.1-slim-bullseye
 
 ENV TARGET_HOST=
+ENV TARGET_PATH=/oai/request/
 ENV DB_HOST=
-# check every 30 days
-ENV BATCH_INTERVAL=2592000
+ENV DB_PATH=/graphql
+
+# check every 1 day
+ENV PUBDB_UPDATE_INTERVALVAL=86400
+ENV OAI_REQUEST_INTERVAL=30
 ENV LOG_LEVEL=DEBUG
+ENV LIMIT_BATCH=-1
     
 COPY requirements.txt /requirements.txt
 COPY src/ /app/
