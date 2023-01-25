@@ -57,15 +57,17 @@ def get_single_chunk_oai_records_by_date(oai_url, datestamp=None, resumption_tok
     if datestamp is None: # set some default datestamp
         datestamp = '1900-01-01T00:00:00Z'
 
-    verb = 'ListRecords'
     if resumption_token is None: # no resumtion token, so get first chunk
-        params = {'verb': verb, 'metadataPrefix': 'oai_dc', 'from': datestamp} # The metadataPrefix - a string to specify the metadata format in OAI-PMH requests issued to the repository
-        resp = requests.get(oai_url, params=params)
-        oaixml = BeautifulSoup(resp.content, "lxml-xml")
+        params = {'metadataPrefix': 'oai_dc', 'from': datestamp} # The metadataPrefix - a string to specify the metadata format in OAI-PMH requests issued to the repository
     else: # there is a resumption token, so get the next chunk
-        params={'verb': verb, 'resumptionToken': resumption_token}
-        resp = requests.get(oai_url, params=params)
-        oaixml = BeautifulSoup(resp.content, "lxml-xml")
+        params= {'resumptionToken': resumption_token}
+
+    # verb = 'ListRecords'
+
+    params['verb'] = 'ListRecords'
+    resp = requests.get(oai_url, params=params)
+    oaixml = BeautifulSoup(resp.content, "lxml-xml")
+
     return oaixml
 
 
