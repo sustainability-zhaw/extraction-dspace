@@ -1,6 +1,11 @@
 import os
 
-TARGET_HOST = os.getenv('TARGET_HOST', 'https://digitalcollection.zhaw.ch') # url to the oai-pmh api'
+##
+# IMPORTANT NOTE
+# 
+# Any default values in this file are only INFORMATIVE. The actual default values are defined in the Dockerfile.
+
+TARGET_HOST = os.getenv('TARGET_HOST', '') # url to the oai-pmh api'
 TARGET_PATH = os.getenv('TARGET_PATH', '/oai/request/')
 DB_HOST = os.getenv('DB_HOST', 'http://localhost:8080') # url to the grapg database
 DB_PATH = os.getenv('DB_HOST', '/graphql') # url to the grapg database
