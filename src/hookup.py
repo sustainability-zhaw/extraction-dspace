@@ -345,8 +345,13 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 
 async def run(resumption_token=None):
     logger.info("run service function")
+
     oai_url = settings.TARGET_HOST + settings.TARGET_PATH #' https://digitalcollection.zhaw.ch/oai/request/' # url to the oai-pmh api
     graphdb_endpoint = settings.DB_HOST + settings.DB_PATH # 'http://localhost:8080/graphql' # url to the graphdb endpoint
+
+    logger.debug(oai_url)
+    logger.debug(graphdb_endpoint)
+
     transport = AIOHTTPTransport(url=graphdb_endpoint) # Select your transport with a defined url endpoint
     # Create a GraphQL client using the defined transport
     client = Client(transport=transport, fetch_schema_from_transport=True)
