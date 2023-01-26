@@ -50,8 +50,7 @@ def get_single_chunk_oai_records_by_date(oai_url, datestamp=None, resumption_tok
     :param oai_url: Specify the oai-pmh endpoint of the repository
     :param datestamp: Specify a date from which to retrieve the records i.e. '2023-01-13'
     :param resumption_token: Retrieve the next chunk of records
-    :return: A beautifulsoup object
-    :doc-author: Trelent
+    :return: A beautifulsoup object containing the xml response
     """
 
     if datestamp is None: # set some default datestamp
@@ -61,8 +60,6 @@ def get_single_chunk_oai_records_by_date(oai_url, datestamp=None, resumption_tok
         params = {'metadataPrefix': 'oai_dc', 'from': datestamp} # The metadataPrefix - a string to specify the metadata format in OAI-PMH requests issued to the repository
     else: # there is a resumption token, so get the next chunk
         params= {'resumptionToken': resumption_token}
-
-    # verb = 'ListRecords'
 
     params['verb'] = 'ListRecords'
     resp = requests.get(oai_url, params=params)
@@ -88,6 +85,7 @@ def get_entity_from_xml_record_entity(record, entity):
     else: # if there is no entity, then return an empty list
         entity_list = []    
     return entity_list
+
 
 def get_deptcollection_from_xml_record_entity(record):
     """
@@ -234,7 +232,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
         record_deleted = False
         if len(record.header.attrs) > 0:
             if record.header['status'] == 'deleted':
-                print('Record is deleted')
+                # print('Record is deleted')
                 record_deleted = True
                 deleted_records += 1
 

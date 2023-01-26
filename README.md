@@ -40,3 +40,8 @@ docker compose -f docker-compose-local.yaml up --build --force-recreate db db_in
 ```
 
 The launch takes approx. 30 seconds. After that period an initialised dgraph database is exposed via `http://localhost:8080/graphql`.
+
+### Reset dgraph DB
+```bash
+curl -X POST localhost:8080/alter -d '{"drop_op": "DATA"}'
+```
