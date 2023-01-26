@@ -7,7 +7,9 @@ services:
       db_init:
         condition: service_completed_successfully 
     environment:
-      DB_HOST: http://db:8080/graphql
+      DB_HOST: http://db:8080
+      TARGET_HOST: https://digitalcollection.zhaw.ch
+      LIMIT_BATCH: 1
     networks:
       - dgraphnet
 
