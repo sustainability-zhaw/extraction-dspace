@@ -1,5 +1,13 @@
 import os
 
+if os.path.exists('/etc/app/config.json'):
+    with open('/etc/app/config.json') as secrets_file:
+        config = json.load(secrets_file)
+        params = ['target_host', 'target_path', 'db_host', 'db_path', 'log_level', 'limit_batch_size', 'oai_request_interval', 'pubdb_update_interval']
+        for key in params:
+            if key in config and config[key] is not None:
+                os.environ[str.upper(key)] = config[key]
+
 ##
 # IMPORTANT NOTE
 # 
