@@ -31,6 +31,17 @@ services:
       - dgraphnet
     restart: 'no'
 
+  gql_browser: 
+     image: caddy:2.6.2
+     restart: 'no'
+     networks:
+      - dgraphnet
+     volumes: 
+      - ./gqldev:/usr/share/caddy
+     ports:
+      - '80:8081'
+
+
   # db_browser:
   #   image: dgraph/ratel:v21.12.0
   #   restart: 'no'
