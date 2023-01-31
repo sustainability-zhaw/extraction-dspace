@@ -1,0 +1,1108 @@
+mutation  {
+    addAuthor(input: : [
+        {
+          "fullname": "Muri Koller, Gabriela",
+          "person": {
+            "LDAPDN": "CN=muri,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Muri Koller",
+            "givenname": "Gabriela",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Holzer, Lorenz",
+          "person": {
+            "LDAPDN": "CN=holz,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Holzer",
+            "givenname": "Lorenz",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Angerer, Alfred",
+          "person": {
+            "LDAPDN": "CN=ange,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Angerer",
+            "givenname": "Alfred",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Negri, Christoph",
+          "person": {
+            "LDAPDN": "CN=nehr,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Negri",
+            "givenname": "Christoph",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Moser, Barbara",
+          "person": {
+            "LDAPDN": "CN=moba,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Moser",
+            "givenname": "Barbara",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Neuhaus, Stephan",
+          "person": {
+            "LDAPDN": "CN=neut,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Neuhaus",
+            "givenname": "Stephan",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Brombach, Christine",
+          "person": {
+            "LDAPDN": "CN=broc,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Brombach",
+            "givenname": "Christine",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Bläse, Richard",
+          "person": {
+            "LDAPDN": "CN=blah,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Bläse",
+            "givenname": "Richard",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Perrin, Daniel",
+          "person": {
+            "LDAPDN": "CN=pdan,OU=P_E,OU=_L,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Perrin",
+            "givenname": "Daniel",
+            "department": {
+              "id": "department_L"
+            }
+          }
+        },
+        {
+          "fullname": "Luomajoki, Hannu",
+          "person": {
+            "LDAPDN": "CN=luom,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Luomajoki",
+            "givenname": "Hannu",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Drenckhan, Helke",
+          "person": {
+            "LDAPDN": "CN=dren,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Drenckhan",
+            "givenname": "Helke",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Rohrer, Jürg",
+          "person": {
+            "LDAPDN": "CN=rohu,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Rohrer",
+            "givenname": "Jürg",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Guillaume, Michel",
+          "person": {
+            "LDAPDN": "CN=guil,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Guillaume",
+            "givenname": "Michel",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Lehner, Patrick",
+          "person": {
+            "LDAPDN": "CN=lehn,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Lehner",
+            "givenname": "Patrick",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Seiler, Roger",
+          "person": {
+            "LDAPDN": "CN=seir,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Seiler",
+            "givenname": "Roger",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Keller, Thomas",
+          "person": {
+            "LDAPDN": "CN=kell,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Keller",
+            "givenname": "Thomas",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Graf-Hausner, Ursula",
+          "person": {
+            "LDAPDN": "CN=xgff,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Graf-Hausner",
+            "givenname": "Ursula",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Bono, Epifania",
+          "person": {
+            "LDAPDN": "CN=bepi,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Bono",
+            "givenname": "Epifania",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Weber, Wibke",
+          "person": {
+            "LDAPDN": "CN=webw,OU=P_E,OU=_L,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Weber",
+            "givenname": "Wibke",
+            "department": {
+              "id": "department_L"
+            }
+          }
+        },
+        {
+          "fullname": "Vögeli Galli, Nicole",
+          "person": {
+            "LDAPDN": "CN=vogc,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Vögeli Galli",
+            "givenname": "Nicole",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Hüppi, Richard Alexander",
+          "person": {
+            "LDAPDN": "CN=hppi,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Hüppi",
+            "givenname": "Richard Alexander",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Meier, Flurina",
+          "person": {
+            "LDAPDN": "CN=meiu,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Meier",
+            "givenname": "Flurina",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Scheermesser, Mandy",
+          "person": {
+            "LDAPDN": "CN=shem,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Scheermesser",
+            "givenname": "Mandy",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Hartwell, Christopher A.",
+          "person": {
+            "LDAPDN": "CN=harw,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Hartwell",
+            "givenname": "Christopher",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Frey, Sara",
+          "person": {
+            "LDAPDN": "CN=fryy,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Frey",
+            "givenname": "Sara",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Liebhart, Daniel",
+          "person": {
+            "LDAPDN": "CN=lieh,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Liebhart",
+            "givenname": "Daniel",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Frei, Jörg",
+          "person": {
+            "LDAPDN": "CN=frej,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Frei",
+            "givenname": "Jörg",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Streuli, Elisa",
+          "person": {
+            "LDAPDN": "CN=stus,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Streuli",
+            "givenname": "Elisa",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Tausendfreund, Tim",
+          "person": {
+            "LDAPDN": "CN=taus,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Tausendfreund",
+            "givenname": "Tim",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Hilfiker, Roger",
+          "person": {
+            "LDAPDN": "CN=xhil,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Hilfiker",
+            "givenname": "Roger",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Panichella, Sebastiano",
+          "person": {
+            "LDAPDN": "CN=panc,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Panichella",
+            "givenname": "Sebastiano",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Aghaebrahimian, Ahmad",
+          "person": {
+            "LDAPDN": "CN=agha,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Aghaebrahimian",
+            "givenname": "Ahmad",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Cieliebak, Mark",
+          "person": {
+            "LDAPDN": "CN=ciel,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Cieliebak",
+            "givenname": "Mark",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Steinegger, Rolf",
+          "person": {
+            "LDAPDN": "CN=steo,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Steinegger",
+            "givenname": "Rolf",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Scholian, Andrea",
+          "person": {
+            "LDAPDN": "CN=scod,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Scholian",
+            "givenname": "Andrea",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Kobler, Irene",
+          "person": {
+            "LDAPDN": "CN=kobl,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Kobler",
+            "givenname": "Irene",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Schmelzer, Sarah",
+          "person": {
+            "LDAPDN": "CN=kric,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Schmelzer",
+            "givenname": "Sarah",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Liberatore, Florian",
+          "person": {
+            "LDAPDN": "CN=drev,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Liberatore",
+            "givenname": "Florian",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Stahl, Johanna",
+          "person": {
+            "LDAPDN": "CN=sthh,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Stahl",
+            "givenname": "Johanna",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Gehrig, Milena",
+          "person": {
+            "LDAPDN": "CN=xghr,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Gehrig",
+            "givenname": "Milena",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Johner-Kobi, Sylvie",
+          "person": {
+            "LDAPDN": "CN=kobi,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Johner-Kobi",
+            "givenname": "Sylvie",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Gül, Garabet",
+          "person": {
+            "LDAPDN": "CN=guel,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Gül",
+            "givenname": "Garabet",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Koch, Uwe",
+          "person": {
+            "LDAPDN": "CN=kouw,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Koch",
+            "givenname": "Uwe",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Gür, Gürkan",
+          "person": {
+            "LDAPDN": "CN=gueu,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Gür",
+            "givenname": "Gürkan",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Frey, Urs",
+          "person": {
+            "LDAPDN": "CN=xfeu,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Frey",
+            "givenname": "Urs",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "de Spindler, Alexandre",
+          "person": {
+            "LDAPDN": "CN=desa,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "de Spindler",
+            "givenname": "Alexandre",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Brühwiler, Dominik",
+          "person": {
+            "LDAPDN": "CN=breh,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Brühwiler",
+            "givenname": "Dominik",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Büchi, Roland",
+          "person": {
+            "LDAPDN": "CN=bhir,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Büchi",
+            "givenname": "Roland",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Schwenninger, Marc",
+          "person": {
+            "LDAPDN": "CN=sema,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Schwenninger",
+            "givenname": "Marc",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Waller, Gregor",
+          "person": {
+            "LDAPDN": "CN=wall,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Waller",
+            "givenname": "Gregor",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Willemse, Isabel",
+          "person": {
+            "LDAPDN": "CN=wils,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Willemse",
+            "givenname": "Isabel",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Suter, Lilian",
+          "person": {
+            "LDAPDN": "CN=sutl,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Suter",
+            "givenname": "Lilian",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Süss, Daniel",
+          "person": {
+            "LDAPDN": "CN=suss,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Süss",
+            "givenname": "Daniel",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Wyss, Vinzenz",
+          "person": {
+            "LDAPDN": "CN=wysv,OU=P_E,OU=_L,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Wyss",
+            "givenname": "Vinzenz",
+            "department": {
+              "id": "department_L"
+            }
+          }
+        },
+        {
+          "fullname": "Schwendner, Peter",
+          "person": {
+            "LDAPDN": "CN=scwp,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Schwendner",
+            "givenname": "Peter",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Kendzia, Michael Jan",
+          "person": {
+            "LDAPDN": "CN=kend,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Kendzia",
+            "givenname": "Michael Jan",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Hardegger, Simon Carl",
+          "person": {
+            "LDAPDN": "CN=hard,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Hardegger",
+            "givenname": "Simon Carl",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Steiner, Albert",
+          "person": {
+            "LDAPDN": "CN=sine,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Steiner",
+            "givenname": "Albert",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Hofmann, Roland",
+          "person": {
+            "LDAPDN": "CN=horo,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Hofmann",
+            "givenname": "Roland",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Stadelmann, Thilo",
+          "person": {
+            "LDAPDN": "CN=stdm,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Stadelmann",
+            "givenname": "Thilo",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Stockinger, Kurt",
+          "person": {
+            "LDAPDN": "CN=stog,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Stockinger",
+            "givenname": "Kurt",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Klaas, Michael",
+          "person": {
+            "LDAPDN": "CN=klaa,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Klaas",
+            "givenname": "Michael",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Suvada, Adrienne",
+          "person": {
+            "LDAPDN": "CN=suva,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Suvada",
+            "givenname": "Adrienne",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Rüeger, Brian",
+          "person": {
+            "LDAPDN": "CN=rubn,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Rüeger",
+            "givenname": "Brian",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Hannich, Frank",
+          "person": {
+            "LDAPDN": "CN=hanf,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Hannich",
+            "givenname": "Frank",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Fuchs, Rainer",
+          "person": {
+            "LDAPDN": "CN=fuhs,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Fuchs",
+            "givenname": "Rainer",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Müller, Steffen",
+          "person": {
+            "LDAPDN": "CN=muef,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Müller",
+            "givenname": "Steffen",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Müller Werder, Claude",
+          "person": {
+            "LDAPDN": "CN=muew,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Müller Werder",
+            "givenname": "Claude",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Braun, Astrid",
+          "person": {
+            "LDAPDN": "CN=brar,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Braun",
+            "givenname": "Astrid",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Fringer, André",
+          "person": {
+            "LDAPDN": "CN=frin,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Fringer",
+            "givenname": "André",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Klingebiel, Norbert",
+          "person": {
+            "LDAPDN": "CN=klin,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Klingebiel",
+            "givenname": "Norbert",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Danko, Fabian",
+          "person": {
+            "LDAPDN": "CN=dank,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Danko",
+            "givenname": "Fabian",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Signer, Claudio",
+          "person": {
+            "LDAPDN": "CN=sige,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Signer",
+            "givenname": "Claudio",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Graf, Roland Felix",
+          "person": {
+            "LDAPDN": "CN=graf,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Graf",
+            "givenname": "Roland Felix",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Bärtschi, Harald",
+          "person": {
+            "LDAPDN": "CN=baes,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Bärtschi",
+            "givenname": "Harald",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Stohwasser, Stephanie",
+          "person": {
+            "LDAPDN": "CN=stow,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Stohwasser",
+            "givenname": "Stephanie",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Rosenberger Staub, Nicole",
+          "person": {
+            "LDAPDN": "CN=roni,OU=P_E,OU=_L,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Rosenberger Staub",
+            "givenname": "Nicole",
+            "department": {
+              "id": "department_L"
+            }
+          }
+        },
+        {
+          "fullname": "Niederhäuser, Markus",
+          "person": {
+            "LDAPDN": "CN=nima,OU=P_E,OU=_L,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Niederhäuser",
+            "givenname": "Markus",
+            "department": {
+              "id": "department_L"
+            }
+          }
+        },
+        {
+          "fullname": "Nef, Susanne",
+          "person": {
+            "LDAPDN": "CN=mueu,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Nef",
+            "givenname": "Susanne",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Rimann, Markus",
+          "person": {
+            "LDAPDN": "CN=rimm,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Rimann",
+            "givenname": "Markus",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Kehl, Konstantin",
+          "person": {
+            "LDAPDN": "CN=kehl,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Kehl",
+            "givenname": "Konstantin",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Ackermann, Kurt Alexander",
+          "person": {
+            "LDAPDN": "CN=acka,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Ackermann",
+            "givenname": "Kurt Alexander",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Chavarriaga, Ricardo",
+          "person": {
+            "LDAPDN": "CN=char,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Chavarriaga",
+            "givenname": "Ricardo",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Roos, Markus",
+          "person": {
+            "LDAPDN": "CN=roor,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Roos",
+            "givenname": "Markus",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Demuth, Caspar",
+          "person": {
+            "LDAPDN": "CN=demc,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Demuth",
+            "givenname": "Caspar",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Manzoni, Patrik",
+          "person": {
+            "LDAPDN": "CN=manp,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Manzoni",
+            "givenname": "Patrik",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Kamenowski, Maria",
+          "person": {
+            "LDAPDN": "CN=kame,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Kamenowski",
+            "givenname": "Maria",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Baier, Dirk",
+          "person": {
+            "LDAPDN": "CN=baid,OU=P_E,OU=_S,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Baier",
+            "givenname": "Dirk",
+            "department": {
+              "id": "department_S"
+            }
+          }
+        },
+        {
+          "fullname": "Sickinger, Wolfgang",
+          "person": {
+            "LDAPDN": "CN=sici,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Sickinger",
+            "givenname": "Wolfgang",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Bruer, Michaela",
+          "person": {
+            "LDAPDN": "CN=brri,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Bruer",
+            "givenname": "Michaela",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Becker, Johannes Gerd",
+          "person": {
+            "LDAPDN": "CN=bece,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Becker",
+            "givenname": "Johannes Gerd",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Schirmer, Cedric",
+          "person": {
+            "LDAPDN": "CN=scrm,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Schirmer",
+            "givenname": "Cedric",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Eibl-Schindler, Regine",
+          "person": {
+            "LDAPDN": "CN=eibs,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Eibl-Schindler",
+            "givenname": "Regine",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Eibl, Dieter",
+          "person": {
+            "LDAPDN": "CN=eibl,OU=P_E,OU=_N,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Eibl",
+            "givenname": "Dieter",
+            "department": {
+              "id": "department_N"
+            }
+          }
+        },
+        {
+          "fullname": "Burtscher, Michael Josef",
+          "person": {
+            "LDAPDN": "CN=burf,OU=P_E,OU=_P,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Burtscher",
+            "givenname": "Michael Josef",
+            "department": {
+              "id": "department_P"
+            }
+          }
+        },
+        {
+          "fullname": "Meli, Marcel",
+          "person": {
+            "LDAPDN": "CN=mema,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Meli",
+            "givenname": "Marcel",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Meidert, Ursula",
+          "person": {
+            "LDAPDN": "CN=mede,OU=P_E,OU=_G,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Meidert",
+            "givenname": "Ursula",
+            "department": {
+              "id": "department_G"
+            }
+          }
+        },
+        {
+          "fullname": "Müller Farguell, Roger W.",
+          "person": {
+            "LDAPDN": "CN=mlrr,OU=P_E,OU=_W,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Müller",
+            "givenname": "Roger",
+            "department": {
+              "id": "department_W"
+            }
+          }
+        },
+        {
+          "fullname": "Heitz, Christoph",
+          "person": {
+            "LDAPDN": "CN=heit,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Heitz",
+            "givenname": "Christoph",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        },
+        {
+          "fullname": "Ruckstuhl, Andreas",
+          "person": {
+            "LDAPDN": "CN=rkst,OU=P_E,OU=_T,OU=Staff,OU=AUM,DC=zhaw,DC=ch",
+            "surname": "Ruckstuhl",
+            "givenname": "Andreas",
+            "department": {
+              "id": "department_T"
+            }
+          }
+        }
+      ]) {
+        author {
+            fullname
+        }
+      }
+    }
