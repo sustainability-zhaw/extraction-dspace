@@ -245,7 +245,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 
     dep_query = """
     mutation updateInfoObject($record: [AddInfoObjectInput!]!) { 
-        updateInfoObject(input: $record, upsert: true) {
+        updateInfoObject(input: $record) {
             infoObject { 
                 link
             } 
