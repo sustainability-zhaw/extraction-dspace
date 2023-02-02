@@ -278,7 +278,6 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
                 for drauthor in dr['authors']: 
                     if drauthor['person'] is not None: # better save than sorry
                         departments.append({
-                            "link": dr['link'],
                             "departments" : [
                                 {
                                     "id": drauthor['person']['department']['id'] 
