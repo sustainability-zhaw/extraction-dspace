@@ -271,15 +271,17 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 
             result = await client.execute_async(recquery, variable_values = {"record": [record_dict]})
 
+            logger.debug(result)
+
             departments = []
-            for dr in result.data.infoObject:
-                for drauthor in dr.authors: 
-                    if drauthor.person is not None: # better save than sorry
+            for dr in result['addInfoObject']['infoObject']:
+                for drauthor in dr['authors']: 
+                    if drauthor['person'] is not None: # better save than sorry
                         departments.append({
-                            "link": dr.link,
+                            "link": dr['link'],
                             "departments" : [
                                 {
-                                    "id": drauthor.person.department.id 
+                                    "id": drauthor['person']['department']['id'] 
                                 }
                             ]
                         })

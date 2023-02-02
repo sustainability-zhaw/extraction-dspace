@@ -19,7 +19,7 @@ if os.path.exists('/etc/app/config.json'):
             if config[key] is not None:
                 _settings[str.upper(key)] = config[key]
 
-##
+## 
 # IMPORTANT NOTE
 # 
 # Any default values in this file are only INFORMATIVE. The actual default values are defined in the Dockerfile.
