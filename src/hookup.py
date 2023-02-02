@@ -278,9 +278,13 @@ async def run(resumption_token=None):
     else: 
         last_update_timestamp = None
     
-    # chunk of records that have been updated since the last update
-    oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp, resumption_token=resumption_token)
-    token = oaixml.resumptionToken
+    try: 
+        # chunk of records that have been updated since the last update
+        oaixml = get_single_chunk_oai_records_by_date(oai_url, datestamp=last_update_timestamp, resumption_token=resumption_token)
+        token = oaixml.resumptionToken
+    except:
+        return None
+        
     # add chunk of records to the database
     inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
 
