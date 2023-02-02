@@ -288,9 +288,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
                                 "link": { "eq": dr["link"] }
                             },
                             "set": {
-                               "objects": {
-                                    "departments": departments
-                               }
+                                "departments": departments
                             }
                         }
                     })
