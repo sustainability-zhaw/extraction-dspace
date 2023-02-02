@@ -244,7 +244,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
     """
 
     dep_query = """
-    mutation updateInfoObject($record: [AddInfoObjectInput!]!) { 
+    mutation updateInfoObject($record: [UpdateInfoObjectInput!]!) { 
         updateInfoObject(input: $record) {
             infoObject { 
                 link
@@ -278,15 +278,22 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
                 for drauthor in dr['authors']: 
                     if drauthor['person'] is not None: # better save than sorry
                         departments.append({
-                            "departments" : [
-                                {
-                                    "id": drauthor['person']['department']['id'] 
-                                }
-                            ]
+                            "id": drauthor['person']['department']['id'] 
                         })
 
-            if len(departments) > 0: 
-                await client.execute_async(depquery, variable_values = {"record": departments})
+                if len(departments) > 0: 
+                    await client.execute_async(depquery, variable_values = {
+                        "record": { 
+                            "filter": {
+                                "link": dr["link"]
+                            },
+                            "set": {
+                               "objects": {
+                                    "departments": departments
+                               }
+                            }
+                        }
+                    })
             
             inserted_records += 1
     return inserted_records, deleted_records
