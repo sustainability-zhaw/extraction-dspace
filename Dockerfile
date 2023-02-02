@@ -12,7 +12,6 @@ ENV LOG_LEVEL=DEBUG
 ENV LIMIT_BATCH=-1
     
 COPY requirements.txt /requirements.txt
-COPY src/ /app/
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
@@ -42,8 +41,11 @@ RUN apt-get update && \
     apt-get clean && \ 
     rm requirements.txt && \
     groupadd -r app && \
+    mkdir /app && \
     useradd --no-log-init -r -g app app && \
     chmod -R 775 /app
+
+COPY src/ /app/
 
 WORKDIR /app
 
