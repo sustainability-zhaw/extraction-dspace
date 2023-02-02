@@ -285,7 +285,7 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
                     await client.execute_async(depquery, variable_values = {
                         "record": { 
                             "filter": {
-                                "link": dr["link"]
+                                "link": { "eq": dr["link"] }
                             },
                             "set": {
                                "objects": {
