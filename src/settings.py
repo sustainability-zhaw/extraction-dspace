@@ -1,27 +1,37 @@
 import os
 import json
 
+_settings = {
+    "DB_HOST": os.getenv('DB_HOST', 'http://localhost:8080'),
+    "DB_PATH": os.getenv('DB_PATH', '/graphql'),
+    "TARGET_HOST": os.getenv('TARGET_HOST', 'https://digitalcollection.zhaw.ch'),
+    "TARGET_PATH": os.getenv('TARGET_PATH', '/oai/request/'),
+    "PUBDB_UPDATE_INTERVAL": int(os.getenv('PUBDB_UPDATE_INTERVAL', 2592000)),
+    "OAI_REQUEST_INTERVAL": int(os.getenv('OAI_REQUEST_INTERVAL', 180)),
+    "LOG_LEVEL": os.getenv('LOG_LEVEL', ' DEBUG'),
+    "LIMIT_BATCH": int(os.getenv('LIMIT_BATCH', -1)) # define how many batches to process at max, -1 for no limit
+}
+
 if os.path.exists('/etc/app/config.json'):
     with open('/etc/app/config.json') as secrets_file:
         config = json.load(secrets_file)
-        params = ['target_host', 'target_path', 'db_host', 'db_path', 'log_level', 'limit_batch_size', 'oai_request_interval', 'pubdb_update_interval']
-        for key in params:
-            if key in config and config[key] is not None:
-                os.environ[str.upper(key)] = config[key]
+        for key in config.keys():
+            if config[key] is not None:
+                _settings[str.upper(key)] = config[key]
 
 ##
 # IMPORTANT NOTE
 # 
 # Any default values in this file are only INFORMATIVE. The actual default values are defined in the Dockerfile.
 
-TARGET_HOST = os.getenv('TARGET_HOST', 'https://digitalcollection.zhaw.ch') # url to the oai-pmh api'
-TARGET_PATH = os.getenv('TARGET_PATH', '/oai/request/')
-DB_HOST = os.getenv('DB_HOST', 'http://localhost:8080') # url to the grapg database
-DB_PATH = os.getenv('DB_PATH', '/graphql') # url to the grapg database
-PUBDB_UPDATE_INTERVAL = int(os.getenv('PUBDB_UPDATE_INTERVAL', 2592000)) # time to wait between updates of the publication database
-OAI_REQUEST_INTERVAL = int(os.getenv('OAI_REQUEST_INTERVAL', 0)) # time to wait between requests to the oai-pmh api
-LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG')
-LIMIT_BATCH = int(os.getenv('LIMIT_BATCH', 2)) # define how many batches to process at max, -1 for no limit
+TARGET_HOST = _settings['TARGET_HOST'] # url to the oai-pmh api'
+TARGET_PATH = _settings['TARGET_PATH']
+DB_HOST = _settings['DB_HOST'] # url to the grapg database
+DB_PATH = _settings['DB_PATH'] # url to the grapg database
+PUBDB_UPDATE_INTERVAL = _settings['PUBDB_UPDATE_INTERVAL'] # time to wait between updates of the publication database
+OAI_REQUEST_INTERVAL = _settings['OAI_REQUEST_INTERVAL']  # time to wait between requests to the oai-pmh api
+LOG_LEVEL = _settings['LOG_LEVEL']
+LIMIT_BATCH = _settings['LIMIT_BATCH']
 
 # helper dictionary to get the departmental affiliation
 
