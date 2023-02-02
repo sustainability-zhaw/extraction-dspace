@@ -226,6 +226,36 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
     inserted_records = 0
     deleted_records = 0
 
+    my_query = """
+    mutation addInfoObject($record: [AddInfoObjectInput!]!) { 
+        addInfoObject(input: $record, upsert: true) {
+            infoObject { 
+                link
+                authors @cascade {
+                    person {
+                        department {
+                            id
+                        }
+                    }
+                }
+            } 
+        } 
+    }
+    """
+
+    dep_query = """
+    mutation updateInfoObject($record: [AddInfoObjectInput!]!) { 
+        updateInfoObject(input: $record, upsert: true) {
+            infoObject { 
+                link
+            } 
+        } 
+    }
+    """
+
+    recquery = gql(my_query)
+    depquery = gql(dep_query)
+
     # add chunk of records to the database
     for record in oaixml.find_all('record'):
         # check header if record is deleted ... indicated by tag: status = deleted
@@ -239,18 +269,24 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
         if not record_deleted:  
             record_dict = gen_record_dict(record)  # extract information for current record
 
-            my_query = """
-            mutation addInfoObject($record: [AddInfoObjectInput!]!) { 
-                addInfoObject(input: $record, upsert: true) {
-                    infoObject { 
-                        link 
-                    } 
-                } 
-            }
-            """
+            result = await client.execute_async(recquery, variable_values = {"record": [record_dict]})
 
-            query = gql(my_query)
-            result = await client.execute_async(query, variable_values = {"record": [record_dict]})
+            departments = []
+            for dr in result.data.infoObject:
+                for drauthor in dr.authors: 
+                    if drauthor.person is not None: # better save than sorry
+                        departments.append({
+                            "link": dr.link,
+                            "departments" : [
+                                {
+                                    "id": drauthor.person.department.id 
+                                }
+                            ]
+                        })
+
+            if len(departments) > 0: 
+                await client.execute_async(depquery, variable_values = {"record": departments})
+            
             inserted_records += 1
     return inserted_records, deleted_records
 
@@ -284,7 +320,7 @@ async def run(resumption_token=None):
         token = oaixml.resumptionToken
     except:
         return None
-        
+
     # add chunk of records to the database
     inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
 
