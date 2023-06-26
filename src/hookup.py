@@ -25,16 +25,18 @@ async def get_last_dgraph_update_timestamp(client):
     query = gql(
         """
         query {
-            queryInfoObject(order: {desc: dateUpdate}, first: 1) {
-                dateUpdate     
+            queryInfoObjectType(filter: { name: { eq: "publications" } }) {
+                objects(order: { desc: dateUpdate }, first: 1) {
+                    dateUpdate
+                }
             }
         }
         """
     )
     result = await client.execute_async(query)
     # print(result)
-    if len(result['queryInfoObject']) > 0:
-        return result['queryInfoObject'][0]['dateUpdate']
+    if len(result['queryInfoObjectType'][0]["objects"]) > 0:
+        return result['queryInfoObjectType'][0]["objects"][0]['dateUpdate']
     else:
         return None
 
