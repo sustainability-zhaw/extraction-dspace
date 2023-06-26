@@ -234,13 +234,6 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client, channel):
         addInfoObject(input: $record, upsert: true) {
             infoObject { 
                 link
-                authors @cascade {
-                    person {
-                        department {
-                            id
-                        }
-                    }
-                }
             } 
         } 
     }
