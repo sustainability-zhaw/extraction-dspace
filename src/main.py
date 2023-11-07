@@ -19,11 +19,11 @@ async def mainLoop():
         pika.ConnectionParameters(
             host=settings.MQ_HOST,
             heartbeat=settings.MQ_HEARTBEAT,
-            blocked_connection_timeout=settings.MQ_TIMEOUT
+            blocked_connection_timeout=settings.MQ_TIMEOUT,
+            credentials=pika.PlainCredentials(settings.MQ_USER, settings.MQ_PASS)
         )
     )
     channel = connection.channel()
-    channel.exchange_declare(settings.MQ_EXCHANGE, exchange_type="topic")
 
     while (limit_batch == -1) or (limit_batch > 0 and batch_count < limit_batch): # limit number of batches to be processed:
         logger.info('start iteration') # for server logs and profiling, need to run right before the hookup.run().

@@ -13,7 +13,9 @@ _settings = {
     "MQ_HOST": os.getenv("MQ_HOST", "mq"),
     "MQ_EXCHANGE": os.getenv("MQ_EXCHANGE", "zhaw-km"),
     "MQ_HEARTBEAT": int(os.getenv("MQ_HEARTBEAT", 6000)),
-    "MQ_TIMEOUT": int(os.getenv("MQ_TIMEOUT", 3600))
+    "MQ_TIMEOUT": int(os.getenv("MQ_TIMEOUT", 3600)),
+    "MQ_USER": os.getenv("MQ_USER", "extraction-dspace"),
+    "MQ_PASS": os.getenv("MQ_PASS", "guest")
 }
 
 if os.path.exists('/etc/app/config.json'):
@@ -40,6 +42,8 @@ MQ_HOST = _settings['MQ_HOST']
 MQ_EXCHANGE = _settings['MQ_EXCHANGE']
 MQ_HEARTBEAT = _settings['MQ_HEARTBEAT']
 MQ_TIMEOUT = _settings['MQ_TIMEOUT']
+MQ_USER = _settings['MQ_USER']
+MQ_PASS = _settings['MQ_PASS']
 
 # helper dictionary to get the departmental affiliation
 
