@@ -121,7 +121,8 @@ def clean_string(string):
     :param string: Pass the string that is being cleaned
     :return: A string that escapes the following characters: \n, \r, \t, \", \\, \W, \C, \P, \A, \%, \i
     """
-    
+    string = string.strip()
+
     string = string.replace('\n', '\\n')
     string = string.replace('\r', '\\r')
     string = string.replace('\t', '\\t')
@@ -204,17 +205,17 @@ def gen_record_dict(record):
         record_abstract = ''
 
     record_dict = {
-        'title': record_title,
+        'title': record_title.strip(),
         'dateUpdate': record_datestamp,
         'authors': [{'fullname': clean_string(record_dc_creator_list[i])} for i in range(len(record_dc_creator_list))], # [{ fullname: "Föhn, Martina" }]
         'abstract': record_abstract,
         'year': record_year, # 2022
         'keywords':  [{'name': clean_string(record_keyword_list[i])} for i in range(len(record_keyword_list))], # [{ name: "Forest therapy" }, { name: "Health" }, { name: "Mindfulness" }, { name: "Distress" }, { name: "Forest medicine" }, { name: "Shinrin yoku" }, { name: "Cortisol" }, { name: "Forest bathing" }]
-        'class': [{'id': record_class_list[i].split(':')[0], 'name': record_class_list[i].split(':')[1]} for i in range(len(record_class_list))], # [{ id: "615" name: "Pharmakologie und Therapeutik" }]
-        'link': record_url,# "https://digitalcollection.zhaw.ch/handle/11475/23944",
-        'language': record_language, #"de",
+        'class': [{'id': record_class_list[i].split(':')[0].strip(), 'name': record_class_list[i].split(':')[1].strip()} for i in range(len(record_class_list))], # [{ id: "615" name: "Pharmakologie und Therapeutik" }]
+        'link': record_url.strip(),# "https://digitalcollection.zhaw.ch/handle/11475/23944",
+        'language': record_language.strip, #"de",
         'category': {'name': 'publications'},
-        'subtype':  {'name': record_subtype},
+        'subtype':  {'name': record_subtype.strip()},
         'departments': record_department_list
     }
     return record_dict
