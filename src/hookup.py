@@ -213,7 +213,7 @@ def gen_record_dict(record):
         'keywords':  [{'name': clean_string(record_keyword_list[i])} for i in range(len(record_keyword_list))], # [{ name: "Forest therapy" }, { name: "Health" }, { name: "Mindfulness" }, { name: "Distress" }, { name: "Forest medicine" }, { name: "Shinrin yoku" }, { name: "Cortisol" }, { name: "Forest bathing" }]
         'class': [{'id': record_class_list[i].split(':')[0].strip(), 'name': record_class_list[i].split(':')[1].strip()} for i in range(len(record_class_list))], # [{ id: "615" name: "Pharmakologie und Therapeutik" }]
         'link': record_url.strip(),# "https://digitalcollection.zhaw.ch/handle/11475/23944",
-        'language': record_language.strip, #"de",
+        'language': record_language.strip(), #"de",
         'category': {'name': 'publications'},
         'subtype':  {'name': record_subtype.strip()},
         'departments': record_department_list
