@@ -9,7 +9,13 @@ _settings = {
     "PUBDB_UPDATE_INTERVAL": int(os.getenv('PUBDB_UPDATE_INTERVAL', 2592000)),
     "OAI_REQUEST_INTERVAL": int(os.getenv('OAI_REQUEST_INTERVAL', 180)),
     "LOG_LEVEL": os.getenv('LOG_LEVEL', ' DEBUG'),
-    "LIMIT_BATCH": int(os.getenv('LIMIT_BATCH', -1)) # define how many batches to process at max, -1 for no limit
+    "LIMIT_BATCH": int(os.getenv('LIMIT_BATCH', -1)), # define how many batches to process at max, -1 for no limit
+    "MQ_HOST": os.getenv("MQ_HOST", "mq"),
+    "MQ_EXCHANGE": os.getenv("MQ_EXCHANGE", "zhaw-km"),
+    "MQ_HEARTBEAT": int(os.getenv("MQ_HEARTBEAT", 6000)),
+    "MQ_TIMEOUT": int(os.getenv("MQ_TIMEOUT", 3600)),
+    "MQ_USER": os.getenv("MQ_USER", "extraction-dspace"),
+    "MQ_PASS": os.getenv("MQ_PASS", "guest")
 }
 
 if os.path.exists('/etc/app/config.json'):
@@ -32,6 +38,12 @@ PUBDB_UPDATE_INTERVAL = _settings['PUBDB_UPDATE_INTERVAL'] # time to wait betwee
 OAI_REQUEST_INTERVAL = _settings['OAI_REQUEST_INTERVAL']  # time to wait between requests to the oai-pmh api
 LOG_LEVEL = _settings['LOG_LEVEL']
 LIMIT_BATCH = _settings['LIMIT_BATCH']
+MQ_HOST = _settings['MQ_HOST']
+MQ_EXCHANGE = _settings['MQ_EXCHANGE']
+MQ_HEARTBEAT = _settings['MQ_HEARTBEAT']
+MQ_TIMEOUT = _settings['MQ_TIMEOUT']
+MQ_USER = _settings['MQ_USER']
+MQ_PASS = _settings['MQ_PASS']
 
 # helper dictionary to get the departmental affiliation
 

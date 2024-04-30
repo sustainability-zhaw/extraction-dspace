@@ -3,6 +3,7 @@ import logging
 import settings
 import hookup
 import asyncio
+import pika
 
 logging.basicConfig(format="%(levelname)s: %(name)s: %(asctime)s: %(message)s", level=settings.LOG_LEVEL)
 
@@ -14,9 +15,19 @@ async def mainLoop():
     batch_count = 0
     resumption_token = None
 
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host=settings.MQ_HOST,
+            heartbeat=settings.MQ_HEARTBEAT,
+            blocked_connection_timeout=settings.MQ_TIMEOUT,
+            credentials=pika.PlainCredentials(settings.MQ_USER, settings.MQ_PASS)
+        )
+    )
+    channel = connection.channel()
+
     while (limit_batch == -1) or (limit_batch > 0 and batch_count < limit_batch): # limit number of batches to be processed:
         logger.info('start iteration') # for server logs and profiling, need to run right before the hookup.run().
-        resumption_token = await hookup.run(resumption_token) # ask for a batch of records and add them to the graph database
+        resumption_token = await hookup.run(channel, resumption_token) # ask for a batch of records and add them to the graph database
         logger.info('complete iteration') # for server logs and profiling, need to run right after the hookup.run().
 
         # house keeping

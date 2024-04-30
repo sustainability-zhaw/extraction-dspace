@@ -8,6 +8,7 @@ import re
 from bs4 import BeautifulSoup
 from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
+import json
 
 # start
 logger = logging.getLogger('extract-dspace')
@@ -25,16 +26,18 @@ async def get_last_dgraph_update_timestamp(client):
     query = gql(
         """
         query {
-            queryInfoObject(order: {desc: dateUpdate}, first: 1) {
-                dateUpdate     
+            queryInfoObjectType(filter: { name: { eq: "publications" } }) {
+                objects(order: { desc: dateUpdate }, first: 1) {
+                    dateUpdate
+                }
             }
         }
         """
     )
     result = await client.execute_async(query)
     # print(result)
-    if len(result['queryInfoObject']) > 0:
-        return result['queryInfoObject'][0]['dateUpdate']
+    if len(result['queryInfoObjectType'][0]["objects"]) > 0:
+        return result['queryInfoObjectType'][0]["objects"][0]['dateUpdate']
     else:
         return None
 
@@ -108,7 +111,6 @@ def get_deptcollection_from_xml_record_entity(record):
 
     return entity_list
 
-
 def gen_record_dict(record):
     """
     The gen_record_dict function takes a single XML record from the ZHAW Digital
@@ -171,22 +173,22 @@ def gen_record_dict(record):
         record_abstract = ''
 
     record_dict = {
-        'title': record_title,
+        'title': record_title.strip(),
         'dateUpdate': record_datestamp,
-        'authors': [{'fullname': record_dc_creator_list[i]} for i in range(len(record_dc_creator_list))], # [{ fullname: "Föhn, Martina" }]
+        'authors': [{'fullname': record_dc_creator_list[i]} for i in range(len(record_dc_creator_list))],
         'abstract': record_abstract,
-        'year': record_year, # 2022
-        'keywords':  [{'name': record_keyword_list[i]} for i in range(len(record_keyword_list))], # [{ name: "Forest therapy" }, { name: "Health" }, { name: "Mindfulness" }, { name: "Distress" }, { name: "Forest medicine" }, { name: "Shinrin yoku" }, { name: "Cortisol" }, { name: "Forest bathing" }]
-        'class': [{'id': record_class_list[i].split(':')[0], 'name': record_class_list[i].split(':')[1]} for i in range(len(record_class_list))], # [{ id: "615" name: "Pharmakologie und Therapeutik" }]
-        'link': record_url,# "https://digitalcollection.zhaw.ch/handle/11475/23944",
-        'language': record_language, #"de",
+        'year': record_year, 
+        'keywords':  [{'name': record_keyword_list[i]} for i in range(len(record_keyword_list))], 
+        'class': [{'id': record_class_list[i].split(':')[0].strip(), 'name': record_class_list[i].split(':')[1]} for i in range(len(record_class_list))], 
+        'link': record_url.strip(),
+        'language': record_language.strip(), 
         'category': {'name': 'publications'},
-        'subtype':  {'name': record_subtype},
+        'subtype':  {'name': record_subtype.strip()},
         'departments': record_department_list
     }
     return record_dict
 
-async def add_records_to_graphdb_with_updateDate(oaixml, client):
+async def add_records_to_graphdb_with_updateDate(oaixml, client, channel):
     """
     The add_records_to_graphdb function takes in a chunk of records and adds them to the graphdb database.
     :param oaixml: A chunk of records
@@ -201,30 +203,12 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
         addInfoObject(input: $record, upsert: true) {
             infoObject { 
                 link
-                authors @cascade {
-                    person {
-                        department {
-                            id
-                        }
-                    }
-                }
-            } 
-        } 
-    }
-    """
-
-    dep_query = """
-    mutation updateInfoObject($record: UpdateInfoObjectInput!) { 
-        updateInfoObject(input: $record) {
-            infoObject { 
-                link
             } 
         } 
     }
     """
 
     recquery = gql(my_query)
-    depquery = gql(dep_query)
 
     # add chunk of records to the database
     for record in oaixml.find_all('record'):
@@ -243,31 +227,17 @@ async def add_records_to_graphdb_with_updateDate(oaixml, client):
 
             logger.debug(result)
 
-            departments = []
-            for dr in result['addInfoObject']['infoObject']:
-                for drauthor in dr['authors']: 
-                    if drauthor['person'] is not None: # better save than sorry
-                        departments.append({
-                            "id": drauthor['person']['department']['id'] 
-                        })
-
-                if len(departments) > 0: 
-                    await client.execute_async(depquery, variable_values = {
-                        "record": { 
-                            "filter": {
-                                "link": { "eq": dr["link"] }
-                            },
-                            "set": {
-                                "departments": departments
-                            }
-                        }
-                    })
+            channel.basic_publish(
+                settings.MQ_EXCHANGE,
+                routing_key="importer.object",
+                body=json.dumps({ "link": record_dict["link"] })
+            )
             
             inserted_records += 1
     return inserted_records, deleted_records
 
 
-async def run(resumption_token=None):
+async def run(channel, resumption_token=None):
     logger.info("run service function")
 
     oai_url = settings.TARGET_HOST + settings.TARGET_PATH #' https://digitalcollection.zhaw.ch/oai/request/' # url to the oai-pmh api
@@ -298,7 +268,7 @@ async def run(resumption_token=None):
         return None
 
     # add chunk of records to the database
-    inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client)
+    inserted_records, deleted_records = await add_records_to_graphdb_with_updateDate(oaixml, client=client, channel=channel)
 
     logger.info('Number of inserted records: ' + str(inserted_records))
     logger.info('Number of deleted records: ' + str(deleted_records))
